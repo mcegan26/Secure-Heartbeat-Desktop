@@ -1,0 +1,92 @@
+﻿<Page x:Class="Dsktp_SecureHeartbeat.SoundAnalysisPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:oxpt="http://oxyplot.codeplex.com"
+      xmlns:viewModels="clr-namespace:Dsktp_SecureHeartbeat.ViewModels"
+      d:DataContext="{d:DesignInstance viewModels:SoundAnalysisViewModel}"
+      mc:Ignorable="d" 
+      d:DesignHeight="350" d:DesignWidth="625"
+	Title="SoundAnalysisPage">
+
+    <Grid x:Name="LayoutRoot" Background="#FFDFEEFD" Margin="0,0,-231,-34">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!--Image Source="Assets/SecureHeartbeat1.jpg" VerticalAlignment="Top" Margin="0,-32,0,0" Grid.Row="0" Grid.RowSpan="2" IsHitTestVisible="False" Stretch="Fill"/>-->
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel x:Name="MainMenuStackPanel" Grid.Row="0" Grid.ColumnSpan="3" Margin="0,0,0,10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <StackPanel.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF326495" Offset="0"/>
+                    <GradientStop Color="#FFDAEBFD" Offset="0.987"/>
+                </LinearGradientBrush>
+            </StackPanel.Background>
+            <TextBlock  HorizontalAlignment="Left"
+                       TextWrapping="Wrap" 
+                       Text="Secure Heartbeat Dashboard" 
+                       VerticalAlignment="Top" 
+                       Height="56" 
+                       FontFamily="Segoe WP SemiLight" 
+                       FontSize="18" 
+                       FontWeight="Bold" 
+                       TextDecorations="{x:Null}" 
+                       Margin="34,0,0,0"/>
+            <!--<TextBlock Text="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextNormalStyle}"/>-->
+            <!--<TextBlock Text="{Binding Path=LocalizedResources.MainMenuTitle, Source={StaticResource LocalizedStrings}}" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>-->
+        </StackPanel>
+
+        <ListBox Grid.Column="0" Grid.Row="1"  HorizontalAlignment="Left" Height="420" Margin="24,25,0,0" VerticalAlignment="Top" Width="230"/>
+
+        <oxpt:Plot x:Name="Spectrum" 
+                   Grid.Row="1" 
+                   Grid.Column="1" 
+                   Model="{Binding PlotModelFrequency}"
+                   Margin="10,19,0,71"
+                   Height="460"
+                   Width="500"
+                   MinHeight="280"
+                   MaxHeight="500"
+                   MinWidth="350"
+                   MaxWidth="600"
+                   Background="Transparent" Grid.RowSpan="2">
+        </oxpt:Plot>
+
+        <oxpt:Plot x:Name="SpectrumFiltered" 
+                   Grid.Row="1" 
+                   Grid.Column="2" 
+                   Model="{Binding PlotModelFiltered}"
+                   Margin="10 15 0 0"
+                   Height="460"
+                   Width="500"
+                   MinHeight="280"
+                   MaxHeight="500"
+                   MinWidth="350"
+                   MaxWidth="600"
+                   Background="Transparent">
+        </oxpt:Plot>
+
+
+        <Button Content="Generate Spectrum"  
+                Grid.Row="2" 
+                Grid.Column="1"
+                Command="{Binding PlotGraghCommand}"
+                HorizontalAlignment="Right"  
+                VerticalAlignment="Top" 
+                Width="160" 
+                Margin="20,10,30,30" 
+                Height="35"/>
+
+    </Grid>
+</Page>
