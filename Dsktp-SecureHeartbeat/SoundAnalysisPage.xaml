@@ -10,7 +10,7 @@
       d:DesignHeight="350" d:DesignWidth="625"
 	Title="SoundAnalysisPage">
 
-    <Grid x:Name="LayoutRoot" Background="#FFDFEEFD" Margin="0,0,-231,-34">
+    <Grid x:Name="LayoutRoot" Background="MintCream" Margin="0,0,-231,-34">
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -30,16 +30,16 @@
             <StackPanel.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FF326495" Offset="0"/>
-                    <GradientStop Color="#FFDAEBFD" Offset="0.987"/>
+                    <GradientStop Color="MintCream" Offset="0.987"/>
                 </LinearGradientBrush>
             </StackPanel.Background>
-            <TextBlock  HorizontalAlignment="Left"
+            <TextBlock HorizontalAlignment="Left"
                        TextWrapping="Wrap" 
                        Text="Secure Heartbeat Dashboard" 
                        VerticalAlignment="Top" 
-                       Height="56" 
-                       FontFamily="Segoe WP SemiLight" 
-                       FontSize="18" 
+                       Height="65" 
+                       FontFamily="Segoe WP" 
+                       FontSize="24" 
                        FontWeight="Bold" 
                        TextDecorations="{x:Null}" 
                        Margin="34,0,0,0"/>

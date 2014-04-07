@@ -38,18 +38,16 @@ namespace Dsktp_SecureHeartbeat.Commands
 
         public void Execute(object parameter)
         {
-            Console.WriteLine("Successfully executed the command");
+            if (_soundAnalysisvm.SaModel.SpectrumResults == null)
+            {
+                _soundAnalysisvm.SaModel.SpectrumResults =
+                    fftHelper.PerformFftFunction(_soundAnalysisvm.SaModel.SoundFileName);
 
-            //if (_soundAnalysisvm.SaModel.SpectrumResults == null)
-            //{
-            //    _soundAnalysisvm.SaModel.SpectrumResults =
-            //        fftHelper.PerformFftFunction(_soundAnalysisvm.SaModel.SoundFileName);
+                _soundAnalysisvm.SaModel.FilteredSpectrumResults =
+                    _soundAnalysisvm.SaModel.SpectrumResults.Clone() as float[,];
 
-            //    _soundAnalysisvm.SaModel.FilteredSpectrumResults =
-            //        _soundAnalysisvm.SaModel.SpectrumResults.Clone() as float[,];
-
-            //    fftHelper.PerformWienerFilter(_soundAnalysisvm.SaModel.FilteredSpectrumResults);
-            //}
+                fftHelper.PerformWienerFilter(_soundAnalysisvm.SaModel.FilteredSpectrumResults);
+            }
      
             _soundAnalysisvm.PlotFFT();
         }

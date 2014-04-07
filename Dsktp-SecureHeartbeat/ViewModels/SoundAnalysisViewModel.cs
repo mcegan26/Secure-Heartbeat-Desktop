@@ -14,17 +14,13 @@ namespace Dsktp_SecureHeartbeat.ViewModels
     public class SoundAnalysisViewModel : INotifyPropertyChanged
     {
         private SoundAnalysisModel saModel;
-
         public SoundAnalysisModel SaModel
         {
             get { return saModel; }
             set { saModel = value; }
         }
 
-        private ICommand _plotGraphCommand;
-
         private PlotModel _plotModel;
-
         public PlotModel PlotModelFrequency
         {
             get
@@ -47,9 +43,6 @@ namespace Dsktp_SecureHeartbeat.ViewModels
         }
 
         private PlotModel _plotModelFiltered;
-
-
-
         public PlotModel PlotModelFiltered
         {
             get
@@ -71,7 +64,7 @@ namespace Dsktp_SecureHeartbeat.ViewModels
         }
 
 
-
+        private ICommand _plotGraphCommand;
         public ICommand PlotGraghCommand
         {
             get
@@ -96,12 +89,12 @@ namespace Dsktp_SecureHeartbeat.ViewModels
 
         public SoundAnalysisViewModel()
         {
-
             SaModel = new SoundAnalysisModel();
-            //PlotModelFrequency = new PlotModel();
-            PlotModelFiltered = new PlotModel();
             this.Items = new ObservableCollection<SoundAnalysisModel>();
-            CreateModel();
+            PlotModelFrequency = new PlotModel();
+            PlotModelFiltered = new PlotModel();
+            CreateModelFrequency();
+            CreateModelFiltered();
         }
 
         /// <summary>
@@ -156,56 +149,62 @@ namespace Dsktp_SecureHeartbeat.ViewModels
             this.IsDataLoaded = true;
         }
 
-        private void CreateModel()
+        private void CreateModelFrequency()
         {
 
-            var PlotModelFrequency = new PlotModel();
-            PlotModelFrequency.Subtitle = "Frequency Spectrum";
-            PlotModelFrequency.SubtitleFont = "Segoe UI";
-            PlotModelFrequency.SubtitleFontSize = 22;
+            //PlotModelFrequency.Subtitle = "Frequency Spectrum";
+            //PlotModelFrequency.SubtitleFont = "Segoe UI";
+            //PlotModelFrequency.SubtitleFontSize = 22;
 
-            var timeAxis = new LinearAxis(AxisPosition.Bottom, 0, 5) 
-            { 
-                MajorGridlineStyle = LineStyle.Solid, 
-                MinorGridlineStyle = LineStyle.Dash, 
-                MajorTickSize = 0.1, 
-                Unit="Secs",
-                AbsoluteMinimum = 0,
-                AbsoluteMaximum = 20
-            };
-            PlotModelFrequency.Axes.Add(timeAxis);
+            //var timeAxis = new LinearAxis(AxisPosition.Bottom, 0, 5) 
+            //{ 
+            //    MajorGridlineStyle = LineStyle.Solid, 
+            //    MinorGridlineStyle = LineStyle.Dash, 
+            //    MajorTickSize = 0.1, 
+            //    Unit="Secs",
+            //    AbsoluteMinimum = 0,
+            //    AbsoluteMaximum = 20
+            //};
+            //PlotModelFrequency.Axes.Add(timeAxis);
 
-            var ferquencyAxis = new LinearAxis(AxisPosition.Left, 0, 8, "Frequency")
-            {
-                MajorGridlineStyle = LineStyle.Solid, 
-                MinorGridlineStyle = LineStyle.Dash, 
-                Unit = "kHz", 
-                MajorTickSize = 0.1,
-                AbsoluteMinimum = 0,
-                AbsoluteMaximum = 8
-            };
-            PlotModelFrequency.Axes.Add(ferquencyAxis);
+            //var ferquencyAxis = new LinearAxis(AxisPosition.Left, 0, 8, "Frequency")
+            //{
+            //    MajorGridlineStyle = LineStyle.Solid, 
+            //    MinorGridlineStyle = LineStyle.Dash, 
+            //    Unit = "kHz", 
+            //    MajorTickSize = 0.1,
+            //    AbsoluteMinimum = 0,
+            //    AbsoluteMaximum = 8
+            //};
+            //PlotModelFrequency.Axes.Add(ferquencyAxis);
 
-            var magnitueAxis = new LinearColorAxis 
-            {
-                Position = AxisPosition.Right, 
-                Minimum = 0, 
-                Unit = "Dbs", 
-                Title = "Magnitude",
-                AbsoluteMinimum = 0
-            };
-            PlotModelFrequency.Axes.Add(magnitueAxis);
+            //var magnitueAxis = new LinearColorAxis 
+            //{
+            //    Position = AxisPosition.Right, 
+            //    Minimum = 0, 
+            //    Unit = "Dbs", 
+            //    Title = "Magnitude",
+            //    AbsoluteMinimum = 0
+            //};
+            //PlotModelFrequency.Axes.Add(magnitueAxis); 
+            var fsGraphTitle = "Frequency Spectrum";
+            var fsGraphSubtitle = "Graph Displaying Sound File In The Frequency Spectrum";
+            PlotModelFrequency = CreateFrequencyPlot(fsGraphTitle, fsGraphSubtitle);
 
+        }
+
+        public void CreateModelFiltered()
+        {
             PlotModelFiltered.Subtitle = "Noise Filter Applied";
             PlotModelFiltered.SubtitleFont = "Segoe UI";
             PlotModelFiltered.SubtitleFontSize = 22;
 
-            var timeAxisF = new TimeSpanAxis(AxisPosition.Bottom, 0, 5, "Time", "s")
+            var timeAxisF = new LinearAxis(AxisPosition.Bottom, 0, 5)
             {
-                MajorGridlineStyle = LineStyle.Solid, 
-                MinorGridlineStyle = LineStyle.Dash, 
-                MajorTickSize = 0.1, 
-                Unit="Secs",
+                MajorGridlineStyle = LineStyle.Solid,
+                MinorGridlineStyle = LineStyle.Dash,
+                MajorTickSize = 0.1,
+                Unit = "Secs",
                 AbsoluteMinimum = 0,
                 AbsoluteMaximum = 20
             };
@@ -213,75 +212,40 @@ namespace Dsktp_SecureHeartbeat.ViewModels
 
             var frequencyAxisF = new LinearAxis(AxisPosition.Left, 0, 8, "Frequency")
             {
-                MajorGridlineStyle = LineStyle.Solid, 
-                MinorGridlineStyle = LineStyle.Dash, 
-                ShowMinorTicks = true,   
-                Unit = "kHz", 
+                MajorGridlineStyle = LineStyle.Solid,
+                MinorGridlineStyle = LineStyle.Dash,
+                ShowMinorTicks = true,
+                Unit = "kHz",
                 MajorTickSize = 0.1,
                 AbsoluteMinimum = 0,
                 AbsoluteMaximum = 8
             };
             PlotModelFiltered.Axes.Add(frequencyAxisF);
 
-            var magnitueAxisF = new LinearColorAxis 
+            var magnitueAxisF = new LinearColorAxis
             {
-                Position = AxisPosition.Right, 
-                Minimum = 0, 
-                Unit = "Dbs", 
+                Position = AxisPosition.Right,
+                Minimum = 0,
+                Unit = "Dbs",
                 Title = "Magnitude",
                 AbsoluteMinimum = 0
             };
             PlotModelFiltered.Axes.Add(magnitueAxisF);
 
-            var x = new Random();
-
-            //var frequencyGraph = new HeatMapSeries {Data = new double[833, 256]};
-            //for (int i = 0; i < 833; i++)
-            //{
-            //    for (int j = 0; j < 256; j++)
-            //    {
-            //        frequencyGraph.Data[i, j] = x.NextDouble()*100;
-            //    }
-            //}
-
-            var heatMapSeries1 = new HeatMapSeries();
-            heatMapSeries1.Data = new Double[2, 3];
-            heatMapSeries1.Data[0, 0] = 0;
-            heatMapSeries1.Data[0, 1] = 0.2;
-            heatMapSeries1.Data[0, 2] = 0.4;
-            heatMapSeries1.Data[1, 0] = 0.1;
-            heatMapSeries1.Data[1, 1] = 0.3;
-            heatMapSeries1.Data[1, 2] = 0.2;
-            PlotModelFrequency.Series.Add(heatMapSeries1);
-            NotifyPropertyChanged("PlotModelFrequency");
-            NotifyPropertyChanged("PlotModelFiltered");
-            NotifyPropertyChanged("PlotGraphCommand");
-            Console.WriteLine("Successfully executed the command");
         }
 
         public void PlotFFT()
         {
-            var frequencyGraph = new HeatMapSeries();
+            var fsGraphTitle = "Frequency Spectrum";
+            var fsGraphSubtitle = "Graph Displaying Sound File In The Frequency Spectrum";
+            var newPlot = CreateFrequencyPlot(fsGraphTitle, fsGraphSubtitle);
 
-            frequencyGraph.Interpolate = false;
-
-            frequencyGraph.X0 = 0.1;
-            frequencyGraph.X1 = 7.9;
-            frequencyGraph.Y0 = 0.1;
-            frequencyGraph.Y1 = 2.9;
-
-            //frequencyGraph.Data = new Double[SaModel.SpectrumResults.GetLength(0), SaModel.SpectrumResults.GetLength(1)];
-
-            //for (int i = 0; i <SaModel.SpectrumResults.GetLength(0); i++)
-            //{
-            //    for (int j = 0; j < SaModel.SpectrumResults.GetLength(1); j++)
-            //    {
-            //        frequencyGraph.Data[i, j] = SaModel.SpectrumResults[i, j];
-            //    }
-            //}
-
-            //var newPlotModel = new PlotModel();
-            var heatMapSeries1 = new HeatMapSeries();
+            /*var heatMapSeries1 = new HeatMapSeries();
+            heatMapSeries1.X0 = 0.5;
+            heatMapSeries1.X1 = 1.5;
+            heatMapSeries1.Y0 = 0.5;
+            heatMapSeries1.Y1 = 2.5;
+            heatMapSeries1.LabelFontSize = 0.2;
             heatMapSeries1.Data = new Double[2, 3];
             heatMapSeries1.Data[0, 0] = 0;
             heatMapSeries1.Data[0, 1] = 0.2;
@@ -289,13 +253,74 @@ namespace Dsktp_SecureHeartbeat.ViewModels
             heatMapSeries1.Data[1, 0] = 0.1;
             heatMapSeries1.Data[1, 1] = 0.3;
             heatMapSeries1.Data[1, 2] = 0.2;
-            PlotModelFrequency.Series.Add(heatMapSeries1);
-            //PlotModelFrequency.Series.Add(frequencyGraph);
+            newPlot.Series.Add(heatMapSeries1);*/
+
+            var frequencyGraph = new HeatMapSeries();
+
+            //frequencyGraph.Interpolate = false;
+
+            frequencyGraph.Data = new Double[SaModel.SpectrumResults.GetLength(0), SaModel.SpectrumResults.GetLength(1)];
+
+            frequencyGraph.X0 = 0;
+            frequencyGraph.X1 = SaModel.SpectrumResults.GetLength(0) * 0.005;
+            frequencyGraph.Y0 = 0;
+            frequencyGraph.Y1 = 8000;
+
+            for (int i = 0; i < SaModel.SpectrumResults.GetLength(0); i++)
+            {
+                for (int j = 0; j < SaModel.SpectrumResults.GetLength(1); j++)
+                {
+                    frequencyGraph.Data[i, j] = SaModel.SpectrumResults[i, j];
+                }
+            }
+            newPlot.Series.Add(frequencyGraph);
+
+            // Atomically swap the entire reference to the new plot model
+            PlotModelFrequency = newPlot;
 
             NotifyPropertyChanged("PlotModelFrequency");
-            NotifyPropertyChanged("PlotModelFiltered");
-            NotifyPropertyChanged("PlotGraphCommand");
-            //PlotModelFrequency.Render(null, 0, 0);
+
+        }
+
+        public PlotModel CreateFrequencyPlot(String title, String subtitle)
+        {
+            var newPlot = new PlotModel { Subtitle = subtitle, Title = title, TitleFont = "Segoe UI", TitleFontSize = 22};
+            var magnitudeAxis = new LinearColorAxis
+            {
+                HighColor = OxyColors.Gray,
+                LowColor = OxyColors.Black,
+                Position = AxisPosition.Right,
+                Minimum = 0,
+                Unit = "Dbs", 
+                Title = "Magnitude",
+                AbsoluteMinimum = 0
+            };
+            newPlot.Axes.Add(magnitudeAxis);
+            var timeAxis = new LinearAxis(AxisPosition.Bottom, "Time")
+            {
+                IsZoomEnabled = false,
+                MajorGridlineStyle = LineStyle.Solid, 
+                MinorGridlineStyle = LineStyle.Dash, 
+                Unit="Secs",
+                //AbsoluteMinimum = 0,
+                //AbsoluteMaximum = 20
+            };
+            newPlot.Axes.Add(timeAxis);
+            var ferquencyAxis = new LinearAxis(AxisPosition.Left, "Frequency")
+            {
+                Position = AxisPosition.Left,
+                IsZoomEnabled = false,
+                IsPanEnabled = false,
+                MajorGridlineStyle = LineStyle.Solid,
+                MinorGridlineStyle = LineStyle.Dash, 
+                Unit = "kHz",
+                Minimum = 0,
+                //AbsoluteMinimum = 0,
+                //AbsoluteMaximum = 8
+            };
+            newPlot.Axes.Add(ferquencyAxis);
+
+            return newPlot;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
