@@ -8,7 +8,7 @@ namespace Dsktp_SecureHeartbeat
         private FFTFrameAnalysis fftFrameAnalysisInst = new FFTFrameAnalysis();
 
         private short[] getSoundAsShortByteArray;
-        private const int FrameLength = 320; //length in bits of each frame extracted from sound file
+        private const int FrameLength = 320; //length in bytes of each frame extracted from sound file
         private const int PaddedFrameLength = 512;
         private const int NumberOfBytesPerShortIndex = 2; // number of bits represented by each index in the short array holding the sound wave
 

@@ -49,7 +49,7 @@ namespace Dsktp_SecureHeartbeat.Commands
                 fftHelper.PerformWienerFilter(_soundAnalysisvm.SaModel.FilteredSpectrumResults);
             }
      
-            _soundAnalysisvm.PlotFFT();
+            _soundAnalysisvm.PlotFft();
         }
 
     }
