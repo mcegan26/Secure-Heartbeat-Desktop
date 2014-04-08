@@ -10,7 +10,7 @@ namespace Dsktp_SecureHeartbeat
         // re, im are two arrays of size nFFT
  
         //nFFT
-        private const int frameLength = 512;
+        private const int frameLength = 256;
         private const int halfFrameLength = frameLength / 2;
         //nFTT2
  
@@ -75,7 +75,7 @@ namespace Dsktp_SecureHeartbeat
 
 
 
-        public float[] fastFourierTransformAnalysis(short[] frame)
+        public float[] FastFourierTransformAnalysis(short[] frame)
         {
             //Before any of the FFT function is calculate apply the hamming window to the sound frame input
             for (int n = 0; n < frameLength; n++)
@@ -134,13 +134,13 @@ namespace Dsktp_SecureHeartbeat
 		        float realPart = realCoefficient[k];
 		        float imagnaryPart = imaginaryCoefficient[k];
 		        frameMagnitudeInFreqSpectrum[k] = (float) Math.Sqrt(realPart*realPart + imagnaryPart*imagnaryPart);
-		        if (frameMagnitudeInFreqSpectrum[k] < 1)
-		        {
-		            frameMagnitudeInFreqSpectrum[k] = 1; 
-		        }
+                //if (frameMagnitudeInFreqSpectrum[k] < 1)
+                //{
+                //    frameMagnitudeInFreqSpectrum[k] = 1; 
+                //}
                 
                 // Only include this line if noise filtering isnt being used or is complete?
-                frameMagnitudeInFreqSpectrum[k] = (float) Math.Log(frameMagnitudeInFreqSpectrum[k]);
+                //frameMagnitudeInFreqSpectrum[k] = (short) Math.Log(frameMagnitudeInFreqSpectrum[k]);
 		    }   
 
 		    return frameMagnitudeInFreqSpectrum;

@@ -11,11 +11,9 @@ namespace Dsktp_SecureHeartbeat
         private const int FrameLength = 320; //length in bytes of each frame extracted from sound file
         private const int PaddedFrameLength = 512;
         private const int NumberOfBytesPerShortIndex = 2; // number of bits represented by each index in the short array holding the sound wave
-
         private int frameHead;
 
         private static int magnitudeSpectrum;
-
         public static int MagnitudeSpectrum
         {
             get
@@ -47,13 +45,17 @@ namespace Dsktp_SecureHeartbeat
 
         private float [,] fftresults;
 
-
-
+        // Size of the running window to provide smoothness of the noise removal
+        private int windowSpan = 5;
+        // Commonly used over subtraction factor from theory in the field of noise removal
+        private float alpha = 1.1f;
+        // float beta = 0.079432823 / 1.079432823 = Maximum  attenuation corresponding to a priori SNR (Sound to Noise Ratio) of -11db                   
+        private float beta = 0.3f; 
 
         public FFTFunction()
         {
             magnitudeSpectrum = fftFrameAnalysisInst.GetMagnitudeSpectrumSize();
-            currentFrame = new short[PaddedFrameLength];
+            currentFrame = new short[PaddedNumOfValues];
         }
 
         public float[,] PerformFftFunction(String soundFileName)
@@ -83,7 +85,7 @@ namespace Dsktp_SecureHeartbeat
                 }
 
                 // windowing applied within the FFT Frame anaylsis function  
-                var fftFrame = fftFrameAnalysisInst.fastFourierTransformAnalysis(currentFrame);
+                var fftFrame = fftFrameAnalysisInst.FastFourierTransformAnalysis(currentFrame);
                 for (var j = 0; j < magnitudeSpectrum; j++)
                 {
                     fftresults[i, j] = fftFrame[j];
@@ -93,10 +95,103 @@ namespace Dsktp_SecureHeartbeat
             return fftresults;
         }
 
-        public void PerformWienerFilter(float [,] magnitudeArray)
+        /// <summary>
+        /// Obtain a noise estimate by averaging the sound of the intial 20 frames/ 0.22 seconds using the assumtion it will be 
+        /// composed pruely of background noise. Then using a running average over the sound to attempt to obtain an estimate of 
+        /// the voice signal PSD (Power spectral density) by 'removing' the noise psd from the sound. Running average used to try 
+        /// and smooth out the results when working in the PSD domain which tend to give unreadable results.
+        /// </summary>
+        /// <param name="magnitudeArray">The FFT'd results that need to be filtered</param>
+        /// <returns></returns>
+        public float[,] PerformWienerFilter(float[,] magnitudeArray)
         {
+            var initalNoiseLength = 20;
+            var filteredArray = new float[magnitudeArray.GetLength(0), magnitudeArray.GetLength(1)];
+            var noiseEstimate = new float[magnitudeArray.GetLength(1)];
+
+            for (var t = 0; t < initalNoiseLength; t++)
+            {
+                for (var k = 0; k < magnitudeArray.GetLength(1); k++)
+                {
+                    noiseEstimate[k] += magnitudeArray[t, k];
+                }
+            }   
 
 
+            for (var k = 0; k < magnitudeArray.GetLength(1); k++)
+            {
+                noiseEstimate[k] /= initalNoiseLength;
+            }
+
+            for (var k = 0; k < magnitudeArray.GetLength(1); k++)
+            {
+                for (var t = 0; t < magnitudeArray.GetLength(0); t++)
+                {
+                    // running window
+                    int lowerBoundWindow = t - windowSpan, upperBoundWindow = t + windowSpan;
+                    while (lowerBoundWindow < 0)
+                    {
+                        lowerBoundWindow++;
+                        upperBoundWindow++;
+                    }
+                    while (upperBoundWindow >= magnitudeArray.GetLength(0))
+                    {
+                        upperBoundWindow--;
+                        lowerBoundWindow--;
+                    }
+                    var actualWindowSpan = upperBoundWindow - lowerBoundWindow + 1;
+
+                    // running average input periodgram
+                    var averageMagnitude = 0f;
+                    for (var q = lowerBoundWindow; q <= upperBoundWindow; q++)
+                    {
+                        averageMagnitude += magnitudeArray[q,k]*magnitudeArray[q,k];
+                    }
+                    averageMagnitude /= actualWindowSpan;
+
+                    // noise psd
+                    var noisePsd = noiseEstimate[k]*noiseEstimate[k];
+
+                    // signal psd via spectral subtraction
+                    var signalPsd = averageMagnitude - alpha*noisePsd;
+
+                    // set the strength of the filter weight to apply
+                    var filterStrength = 1f;
+                    if (averageMagnitude > 0f)
+                    {
+                        filterStrength = signalPsd / averageMagnitude;
+                    }
+                    if (filterStrength < beta)
+                    {
+                        filterStrength = beta;
+                    }
+
+
+                    // filtering applied to the magnitude sound file represenation input
+                    filteredArray[t, k] = filterStrength * magnitudeArray[t, k];
+                }
+            }
+
+            return filteredArray;
+        }
+
+        public float[,] PerformLogOfResults(float [,] spectrumArray)
+        {
+            var logSpectrumArray = new float[spectrumArray.GetLength(0), spectrumArray.GetLength(1)];
+            
+            for (var t = 0; t < spectrumArray.GetLength(0); t++)
+            {
+                for (var k = 0; k < spectrumArray.GetLength(1); k++)
+                {
+                    logSpectrumArray[t, k] = (float) Math.Log(spectrumArray[t, k]);
+                    if (logSpectrumArray[t, k] < 1)
+                    {
+                        logSpectrumArray[t, k] = 1;
+                    }
+                }   
+            }
+
+            return logSpectrumArray;
         }
 
 

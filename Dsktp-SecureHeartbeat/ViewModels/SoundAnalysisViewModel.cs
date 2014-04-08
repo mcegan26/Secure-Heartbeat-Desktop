@@ -157,13 +157,11 @@ namespace Dsktp_SecureHeartbeat.ViewModels
         public void PlotFft()
         {
             var frequencyGraph = new HeatMapSeries();
-            frequencyGraph.Interpolate = true;
+            //frequencyGraph.Interpolate = true;
 
             frequencyGraph.Data = new Double[SaModel.SpectrumResults.GetLength(0), SaModel.SpectrumResults.GetLength(1)];
 
             var soundTimeLength = SaModel.SpectrumResults.GetLength(0) * 0.005;
-            var fsGraphTitle = "Frequency Spectrum";
-            var fsGraphSubtitle = "Graph Displaying Sound File In The Frequency Spectrum";
             var newPlot = CreateFrequencyPlot(fsGraphTitle, fsGraphSubtitle, soundTimeLength);
 
             frequencyGraph.X0 = 0;
@@ -183,6 +181,36 @@ namespace Dsktp_SecureHeartbeat.ViewModels
             // Atomically swap the entire reference to the new plot model
             PlotModelFrequency = newPlot;
             NotifyPropertyChanged("PlotModelFrequency");
+
+        }
+
+        public void PlotFilteredFFT()
+        {
+            var filterGraph = new HeatMapSeries();
+            //filterGraph.Interpolate = true;
+
+            filterGraph.Data = new Double[SaModel.FilteredSpectrumResults.GetLength(0), SaModel.SpectrumResults.GetLength(1)];
+
+            var soundTimeLength = SaModel.FilteredSpectrumResults.GetLength(0) * 0.005;
+            var newPlot = CreateFrequencyPlot(filGraphTitle, filGraphSubtitle, soundTimeLength);
+
+            filterGraph.X0 = 0;
+            filterGraph.X1 = soundTimeLength;
+            filterGraph.Y0 = 0;
+            filterGraph.Y1 = 8000;
+
+            for (var i = 0; i < SaModel.FilteredSpectrumResults.GetLength(0); i++)
+            {
+                for (var j = 0; j < SaModel.FilteredSpectrumResults.GetLength(1); j++)
+                {
+                    filterGraph.Data[i, j] = SaModel.FilteredSpectrumResults[i, j];
+                }
+            }
+            newPlot.Series.Add(filterGraph);
+
+            // Atomically swap the entire reference to the new plot model
+            PlotModelFiltered = newPlot;
+            NotifyPropertyChanged("PlotModelFiltered");
 
         }
 

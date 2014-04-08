@@ -9,8 +9,8 @@
       mc:Ignorable="d" 
       d:DesignHeight="350" d:DesignWidth="625"
 	Title="SoundAnalysisPage">
-
-    <Grid x:Name="LayoutRoot" Background="MintCream" Margin="0,0,-231,-34">
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+    <Grid x:Name="LayoutRoot" Background="MintCream" Margin="0,0,20,0">
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -55,11 +55,11 @@
                    Model="{Binding PlotModelFrequency}"
                    Margin="10,19,0,71"
                    Height="460"
-                   Width="500"
+                   Width="700"
                    MinHeight="280"
                    MaxHeight="500"
                    MinWidth="350"
-                   MaxWidth="600"
+                   MaxWidth="800"
                    Background="Transparent" Grid.RowSpan="2">
         </oxpt:Plot>
 
@@ -69,11 +69,11 @@
                    Model="{Binding PlotModelFiltered}"
                    Margin="10 15 0 0"
                    Height="460"
-                   Width="500"
+                   Width="700"
                    MinHeight="280"
                    MaxHeight="500"
                    MinWidth="350"
-                   MaxWidth="600"
+                   MaxWidth="800"
                    Background="Transparent">
         </oxpt:Plot>
 
@@ -89,4 +89,5 @@
                 Height="35"/>
 
     </Grid>
+    </ScrollViewer>
 </Page>

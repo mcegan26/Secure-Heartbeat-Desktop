@@ -40,16 +40,25 @@ namespace Dsktp_SecureHeartbeat.Commands
         {
             if (_soundAnalysisvm.SaModel.SpectrumResults == null)
             {
-                _soundAnalysisvm.SaModel.SpectrumResults =
-                    fftHelper.PerformFftFunction(_soundAnalysisvm.SaModel.SoundFileName);
+                var psdFftResults = fftHelper.PerformFftFunction(_soundAnalysisvm.SaModel.SoundFileName);
 
-                _soundAnalysisvm.SaModel.FilteredSpectrumResults =
-                    _soundAnalysisvm.SaModel.SpectrumResults.Clone() as float[,];
+                var unfilteredFftResults = psdFftResults.Clone() as float [,];
+                var filteredFftResults = fftHelper.PerformWienerFilter(unfilteredFftResults);
 
-                fftHelper.PerformWienerFilter(_soundAnalysisvm.SaModel.FilteredSpectrumResults);
+                _soundAnalysisvm.SaModel.SpectrumResults = fftHelper.PerformLogOfResults(psdFftResults);
+                _soundAnalysisvm.SaModel.FilteredSpectrumResults = fftHelper.PerformLogOfResults(filteredFftResults);
+
+                //_soundAnalysisvm.SaModel.SpectrumResults =
+                //    fftHelper.PerformFftFunction(_soundAnalysisvm.SaModel.SoundFileName);
+
+                //_soundAnalysisvm.SaModel.FilteredSpectrumResults =
+                //    _soundAnalysisvm.SaModel.SpectrumResults.Clone() as float[,];
+
+                //fftHelper.PerformWienerFilter(_soundAnalysisvm.SaModel.FilteredSpectrumResults);
             }
      
             _soundAnalysisvm.PlotFft();
+            _soundAnalysisvm.PlotFilteredFFT();
         }
 
     }
