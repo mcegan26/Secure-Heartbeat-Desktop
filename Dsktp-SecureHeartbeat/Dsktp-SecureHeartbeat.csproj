@@ -105,6 +105,8 @@
     </Compile>
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\SoundAnalysisViewModel.cs" />
+    <Compile Include="Commands\UpdateUserCommand.cs" />
+    <Compile Include="ViewModels\UsersViewModel.cs" />
     <Page Include="AddUsersPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

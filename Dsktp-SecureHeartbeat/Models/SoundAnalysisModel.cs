@@ -5,38 +5,122 @@ namespace Dsktp_SecureHeartbeat.Models
 {
     public class SoundAnalysisModel
     {
-        // Password not pulled from the Backend as it is not needed
+        // Password not pulled from the Backend as it is not needed and would cause unecessary security risks
 
-        private int username;
-
+        private int _username;
         public int Username
         {
-            get { return username; }
-            set { username = value; }
+            get { return _username; }
+            set { _username = value; }
         }
 
-        private String email;
-        private long mobileNo;
-        private String forename;
-        private String surname;
-        private String department;
-        private bool withinBoundary;
-        private double NWLat;
-        private double NWLong;
-        private double SELat;
-        private double SELong;
-        private double currentLat;
-        private double currentLong;
+        private string _email;
+        public string Email
+        {
+            get { return _email; }
+            set { _email = value; }
+        }
 
-        private object soundFile;
-        public object SoundFile
+        private long _mobileNo;
+        public long MobileNo
+        {
+            get { return _mobileNo; }
+            set { _mobileNo = value; }
+        }
+
+        private string _forename;
+        public string Forename
+        {
+            get { return _forename; }
+            set { _forename = value; }
+        }
+        
+        private string _surname;
+        public string Surname
+        {
+            get { return _surname; }
+            set { _surname = value; }
+        }
+
+        private string _department;
+        public string Department
+        {
+            get { return _department; }
+            set { _department = value; }
+        }
+
+        private bool _admin;
+        public bool Admin
+        {
+            get { return _admin; }
+            set { _admin = value; }
+        }
+
+        private bool _withinBoundary;
+        public bool WithinBoundary
+        {
+            get { return _withinBoundary; }
+            set { _withinBoundary = value; }
+        }
+
+        private double _NWLat;
+        public double NWLat
+        {
+            get { return _NWLat; }
+            set { _NWLat = value; }
+        }
+
+        private double _NWLong;
+        public double NWLong
+        {
+            get { return _NWLong; }
+            set { _NWLong = value; }
+        }
+
+        private double _SELat;
+        public double SELat
+        {
+            get { return _SELat; }
+            set { _SELat = value; }
+        }
+
+        private double _SELong;
+        public double SELong
+        {
+            get { return _SELong; }
+            set { _SELong = value; }
+        }
+
+        private double _currentLat;
+        public double CurrentLat
+        {
+            get { return _currentLat; }
+            set { _currentLat = value; }
+        }
+
+        private double _currentLong;
+        public double CurrentLong
+        {
+            get { return _currentLong; }
+            set { _currentLong = value; }
+        }
+
+        private byte[] soundFile;
+        public byte[] SoundFile
         {
             get { return soundFile; }
             set { soundFile = value; }
         }
 
+        private byte[] imageFile;
+        public byte[] ImageFile
+        {
+            get { return imageFile; }
+            set { imageFile = value; }
+        }
 
-        private String soundFileName;
+
+        private string soundFileName;
         public string SoundFileName
         {
             get { return soundFileName; }
@@ -60,10 +144,23 @@ namespace Dsktp_SecureHeartbeat.Models
 
         public SoundAnalysisModel(ParseObject user)
         {
-            // spectrumResults = new float[FFTFunction.NumberOfFrames, FFTFunction.MagnitudeSpectrum];
-            // filteredSpectrumResults = new float[FFTFunction.NumberOfFrames, FFTFunction.MagnitudeSpectrum];
+            Username = user.Get<int>("username");
+            Forename = user.Get<string>("forename");
+            Surname = user.Get<string>("surname");
+            Forename = user.Get<string>("forename");
+            Department = user.Get<string>("department");
+            Email = user.Get<string>("email");
+            MobileNo = user.Get<long>("forename");
+            NWLat = user.Get<double>("NWLat");
+            NWLong = user.Get<double>("NWLong");
+            SELat = user.Get<double>("SELat");
+            SELong = user.Get<double>("SELong");
+            Admin = user.Get<bool>("admin");
+            WithinBoundary = user.Get<bool>("withinBoundary");
 
-            //todo iterate through the parse object and assign to the user details
+            ParseGeoPoint aux = user.Get<ParseGeoPoint>();
+            CurrentLat = aux.Latitude;
+            CurrentLong = aux.Longitude;
         }
 
         public SoundAnalysisModel()
@@ -73,8 +170,6 @@ namespace Dsktp_SecureHeartbeat.Models
 
         //Examplary values and format of what a sound Analysis User Model would have
 
-
-        //DateTime user1dob = new DateTime(1992, 3, 26);
         //double user1lat = 54.581728;
         //double user1long = -5.937756;
         //ParseGeoPoint user1GeoPoint = new ParseGeoPoint(user1lat, user1long);

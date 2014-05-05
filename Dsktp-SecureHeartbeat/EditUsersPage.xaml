@@ -4,10 +4,225 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300"
-	Title="EditUsersPage">
+      d:DesignHeight="600" d:DesignWidth="500"
+	Title="Secure Heartbeat - User Console">
 
-    <Grid>
-        
+    <Grid x:Name="LayoutRoot">
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FF326495" Offset="0"/>
+                <GradientStop Color="#FFDAEBFD" Offset="0.987"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+
+        <StackPanel x:Name="MainMenuStackPanel" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" Margin="0,0,0,10">
+            <TextBlock HorizontalAlignment="Center" 
+                       TextAlignment="Center" 
+                       TextWrapping="Wrap" 
+                       Text="SH User Console" 
+                       VerticalAlignment="Top" 
+                       Height="50" 
+                       FontFamily="Segoe WP SemiLight" 
+                       FontSize="28" 
+                       FontWeight="Bold"/>
+        </StackPanel>
+
+        <Image Source="{Binding Path=ImageFile}" Grid.Row="1" Grid.RowSpan="5" Grid.Column="4" ImageFailed="Image_OnImageFailed"/>
+
+        <!--ContentPanel contains LongListSelector and LongListSelector ItemTemplate. Place additional content here-->
+        <Grid x:Name="IDPanel" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Margin="12,0,12,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock 
+                Text="Username: " 
+                Grid.Column="0"  
+                TextWrapping="Wrap" />
+            <TextBox 
+                Text="{Binding Path=Username}"
+                Grid.Column="1"
+                Name="usernameBox"
+                Margin="15,0,0,0"
+                TextWrapping="Wrap" />
+        </Grid>
+
+
+
+        <Grid x:Name="NamePanel" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" Margin="12,15,12,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock 
+                Text="Forename: " 
+                Grid.Column="0"  
+                TextWrapping="Wrap" />
+            <TextBox 
+                Text="{Binding Path=Forename, Mode=TwoWay, UpdateSourceTrigger=Default}"
+                Grid.Column="1"
+                Name="forenameBox"
+                Margin="15,0,15,0"
+                TextWrapping="Wrap" />
+
+            <TextBlock 
+                Text="Surname: " 
+                Grid.Column="2"  
+                TextWrapping="Wrap" />
+            <TextBox 
+                Text="{Binding Path=Surname, Mode=TwoWay, UpdateSourceTrigger=Default}"
+                Grid.Column="3"
+                Name="surenameBox"
+                Margin="15,0,0,0"
+                TextWrapping="Wrap" />
+        </Grid>
+
+        <Grid x:Name="MobilePanel" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" Margin="12,15,12,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock 
+                Text="Mobile Number: " 
+                Grid.Column="0"  
+                TextWrapping="Wrap" />
+            <TextBox 
+                Text="{Binding Path=MobileNo, Mode=TwoWay, UpdateSourceTrigger=Default}"
+                Grid.Column="1"
+                Margin="15,0,0,0"
+                Name="mobileBox"
+                TextWrapping="Wrap" />
+        </Grid>
+
+        <Grid x:Name="DepartmentPanel" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4" Margin="12,15,12,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock 
+                Text="Department: " 
+                Grid.Column="0"  
+                TextWrapping="Wrap" />
+            <TextBox 
+                Text="{Binding Path=Department, Mode=TwoWay, UpdateSourceTrigger=Default}"
+                Grid.Column="1"
+                Name="departmentBox"
+                Margin="15,0,0,0"
+                TextWrapping="Wrap" />
+        </Grid>
+
+        <Grid x:Name="EmailPanel" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="4" Margin="12,15,12,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock 
+                Text="Email Address: " 
+                Grid.Column="0"  
+                TextWrapping="Wrap" />
+            <TextBox 
+                Text="{Binding Path=Email, Mode=TwoWay, UpdateSourceTrigger=Default}"
+                Grid.Column="1"
+                Name="emailBox"
+                Margin="15,0,0,0"
+                TextWrapping="Wrap" />
+        </Grid>
+
+
+
+
+
+
+
+
+
+        <Grid x:Name="AdminPanel" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="4" Margin="12,15,12,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock 
+                Text="Admin: " 
+                Grid.Column="0"  
+                TextWrapping="Wrap" />
+            <TextBox 
+                Text="{Binding Path=Admin}"
+                Grid.Column="1"
+                Name="adminBox"
+                Width="60"
+                Margin="15,0,0,0"
+                TextWrapping="Wrap" />
+        </Grid>
+
+
+        <Grid x:Name="InBoundaryPanel" Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="4" Margin="12,15,12,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock 
+                Text="WihtinBoundary: " 
+                Grid.Column="0"  
+                TextWrapping="Wrap" />
+            <TextBox 
+                Text="{Binding Path=WithinBoundary}"
+                Grid.Column="1"
+                Name="withinBoundaryBox"
+                Width="60"
+                Margin="15,0,0,0"
+                TextWrapping="Wrap" />
+        </Grid>
+
+
+        <Grid x:Name="ButtonPanel" Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="4" Margin="12,15,12,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+
+            <Button x:Name="SaveButton" 
+                Content="Save Changes" 
+                Grid.Column="3"
+                Height="40"
+                Width="100"
+                Margin="20,0,0,0"
+                Command="{Binding SaveUserCommand}"/>
+         </Grid>
+
     </Grid>
 </Page>

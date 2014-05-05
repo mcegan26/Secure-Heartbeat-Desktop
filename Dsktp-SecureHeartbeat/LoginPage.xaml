@@ -4,7 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300"
+      d:DesignHeight="200" d:DesignWidth="180"
 	Title="LoginPage">
 
     <Grid x:Name="LayoutRoot">
@@ -24,7 +24,15 @@
 
 
         <StackPanel x:Name="MainMenuStackPanel" Grid.Row="0" Margin="0,0,0,10">
-            <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Secure Heartbeat Dashboard" VerticalAlignment="Top" Height="56" FontFamily="Segoe WP SemiLight" FontSize="18" FontWeight="Bold" TextDecorations="{x:Null}" Margin="34,0,0,0"/>
+            <TextBlock HorizontalAlignment="Center" 
+                       TextAlignment="Center" 
+                       TextWrapping="Wrap" 
+                       Text="Secure Heartbeat Admin Login" 
+                       VerticalAlignment="Top" 
+                       Height="56" 
+                       FontFamily="Segoe WP SemiLight" 
+                       FontSize="18" 
+                       FontWeight="Bold"/>
         </StackPanel>
 
         <!--ContentPanel contains LongListSelector and LongListSelector ItemTemplate. Place additional content here-->
@@ -58,13 +66,9 @@
         <Button x:Name="LoginButton" 
                 Content="Login" 
                 Grid.Row="2"
-                Height="50"
+                Height="40"
                 Width="170"
                 Click="LoginButton_OnClick"/>
-
-        <!--Command="{Binding LoginAttemptCommand}" 
-                CommandParameter="{Binding ElementName=passBox}"-->
-
 
     </Grid>
 </Page>

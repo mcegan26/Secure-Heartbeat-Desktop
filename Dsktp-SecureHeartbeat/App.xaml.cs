@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System.Collections.Generic;
+using System.Windows;
+using Dsktp_SecureHeartbeat.Models;
 using Dsktp_SecureHeartbeat.ViewModels;
 using Parse;
 
@@ -11,44 +13,44 @@ namespace Dsktp_SecureHeartbeat
     public partial class App : Application
     {
         private static LoginViewModel _loginvm = null;
+        private static UsersViewModel _usersvm = null;
         private static SoundAnalysisViewModel _soundAnalysisvm = null;
+        public static List<SoundAnalysisModel> userList; 
 
         public static LoginViewModel Loginvm
         {
             get
             {
                 // Delay creation of the view model until necessary
-                if(_loginvm == null)
-                {
-                    _loginvm = new LoginViewModel();
-                }
+                return _loginvm ?? (_loginvm = new LoginViewModel());
+            }
+        }
 
-
-                return _loginvm;
+        public static UsersViewModel Usersvm
+        {
+            get
+            {
+                // Delay creation of the view model until necessary
+                return _usersvm ?? (_usersvm = new UsersViewModel());
             }
         }
 
 
-        /// <summary>
-        /// A static ViewModel used by the views to bind against.
-        /// </summary>
-        /// <returns>The MainViewModel object.</returns>
         public static SoundAnalysisViewModel SoundAnalysisvm
         {
             get
             {
                 // Delay creation of the view model until necessary
-                if(_soundAnalysisvm == null)
-                    _soundAnalysisvm = new SoundAnalysisViewModel();
-
-                return _soundAnalysisvm;
+                return _soundAnalysisvm ?? (_soundAnalysisvm = new SoundAnalysisViewModel());
             }
-            
         }
 
         public App()
         {
             ParseClient.Initialize("JO4tBIiydFtLJ8zjDFg10Km8YS84a2WqgC8hUiQ3", "y2dLvFgBeyzt89pv9gLtJBaZlsMn7jiZfIty5Ufb");
+            
+            userList = new List<SoundAnalysisModel>();
+            
         }
 
         
