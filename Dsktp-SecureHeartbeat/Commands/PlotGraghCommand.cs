@@ -42,7 +42,7 @@ namespace Dsktp_SecureHeartbeat.Commands
             {
                 var psdFftResults = fftHelper.PerformFftFunction(_soundAnalysisvm.SaModel.SoundFileName);
 
-                var unfilteredFftResults = psdFftResults.Clone() as float [,];
+                var unfilteredFftResults = psdFftResults.Clone() as double [,];
                 var filteredFftResults = fftHelper.PerformWienerFilter(unfilteredFftResults);
 
                 _soundAnalysisvm.SaModel.SpectrumResults = fftHelper.PerformLogOfResults(psdFftResults);

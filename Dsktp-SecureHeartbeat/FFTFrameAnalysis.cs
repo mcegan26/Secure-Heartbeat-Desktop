@@ -14,25 +14,25 @@ namespace Dsktp_SecureHeartbeat
         private const int halfFrameLength = frameLength / 2;
         //nFTT2
  
-        private float[,] cosWave;
-        private float[,] sinWave;
+        private double[,] cosWave;
+        private double[,] sinWave;
 
-        private float[] realCoefficient;
-        private float[] imaginaryCoefficient;
-        private float[] hammWindow;
+        private double[] realCoefficient;
+        private double[] imaginaryCoefficient;
+        private double[] hammWindow;
 
-        private float[] frameMagnitudeInFreqSpectrum;
+        private double[] frameMagnitudeInFreqSpectrum;
 
         public FFTFrameAnalysis()
         { 
-            cosWave = new float[halfFrameLength, frameLength]; 
-            sinWave = new float[halfFrameLength, frameLength];
+            cosWave = new double[halfFrameLength, frameLength];
+            sinWave = new double[halfFrameLength, frameLength];
 
-            realCoefficient = new float[halfFrameLength];
-            imaginaryCoefficient = new float[halfFrameLength];
-            hammWindow = new float[frameLength];
+            realCoefficient = new double[halfFrameLength];
+            imaginaryCoefficient = new double[halfFrameLength];
+            hammWindow = new double[frameLength];
 
-            frameMagnitudeInFreqSpectrum = new float[halfFrameLength + 1];
+            frameMagnitudeInFreqSpectrum = new double[halfFrameLength + 1];
 
             // create the waves to be able to anasyle the frame imput as a normal sinisodual wave
             generateSinusoidalWaves();
@@ -49,8 +49,8 @@ namespace Dsktp_SecureHeartbeat
 		    {                  
 			    for(int n = 0; n < frameLength; n++) 
 			    {
-                	cosWave[k, n] = (float) Math.Cos(2 * Math.PI * k * n / frameLength);
-              		sinWave[k, n] = (float) Math.Sin(2 * Math.PI * k * n / frameLength);
+                	cosWave[k, n] = Math.Cos(2 * Math.PI * k * n / frameLength);
+              		sinWave[k, n] = Math.Sin(2 * Math.PI * k * n / frameLength);
          		}	
     		}
         }
@@ -67,7 +67,7 @@ namespace Dsktp_SecureHeartbeat
         {
             for (int i = 0; i < frameLength; i++)
             {
-                hammWindow[i] = (float)(0.54 - 0.46 * Math.Cos(2 * i * Math.PI / (frameLength - 1)));
+                hammWindow[i] = (0.54 - 0.46 * Math.Cos(2 * i * Math.PI / (frameLength - 1)));
             }
         }
 
@@ -75,7 +75,7 @@ namespace Dsktp_SecureHeartbeat
 
 
 
-        public float[] FastFourierTransformAnalysis(short[] frame)
+        public double[] FastFourierTransformAnalysis(short[] frame)
         {
             //Before any of the FFT function is calculate apply the hamming window to the sound frame input
             for (int n = 0; n < frameLength; n++)
@@ -87,14 +87,14 @@ namespace Dsktp_SecureHeartbeat
             // Real values from the frame
             realCoefficient[0] = 0;
 
-    		for(int n = 0; n < frameLength; n++)
+    		for(var n = 0; n < frameLength; n++)
             {
                 realCoefficient[0] += frame[n];
             }
 
 
     		realCoefficient[halfFrameLength - 1] = 0;
-    		for(int n = 0; n < frameLength; n++)
+    		for(var n = 0; n < frameLength; n++)
     		{
     		    float a = (n%2 == 1) ? -frame[n] : frame[n];
          		realCoefficient[halfFrameLength - 1] += a;
@@ -102,11 +102,11 @@ namespace Dsktp_SecureHeartbeat
 
 
 
-            for(int k = 1; k < halfFrameLength; k++)
+            for(var k = 1; k < halfFrameLength; k++)
 			{
                 realCoefficient[k] = 0;
          			
-                for(int n = 0; n < frameLength; n++)
+                for(var n = 0; n < frameLength; n++)
                 {
                 	realCoefficient[k] += frame[n] * cosWave[k, n];
                 }
@@ -114,10 +114,10 @@ namespace Dsktp_SecureHeartbeat
  
             // Imaginary values for the frame
     		imaginaryCoefficient[0] = imaginaryCoefficient[halfFrameLength - 1] = 0;
-            for(int k = 1; k < halfFrameLength; k++) 
+            for(var k = 1; k < halfFrameLength; k++) 
 			{
                 imaginaryCoefficient[k] = 0;
-         		for(int n = 0; n < frameLength; n++)
+         		for(var n = 0; n < frameLength; n++)
                 {
                 	imaginaryCoefficient[k] += frame[n] * sinWave[k, n]; 
                 }    		
@@ -129,11 +129,11 @@ namespace Dsktp_SecureHeartbeat
             /// recording of wav files from the mobile app and therefore the frequecy that is represent 
             /// is upto exactly half) 
 
-		    for (int k = 0; k < halfFrameLength; k++)
+		    for (var k = 0; k < halfFrameLength; k++)
 		    {
-		        float realPart = realCoefficient[k];
-		        float imagnaryPart = imaginaryCoefficient[k];
-		        frameMagnitudeInFreqSpectrum[k] = (float) Math.Sqrt(realPart*realPart + imagnaryPart*imagnaryPart);
+		        var realPart = realCoefficient[k];
+		        var imagnaryPart = imaginaryCoefficient[k];
+		        frameMagnitudeInFreqSpectrum[k] = Math.Sqrt(realPart*realPart + imagnaryPart*imagnaryPart);
                 //if (frameMagnitudeInFreqSpectrum[k] < 1)
                 //{
                 //    frameMagnitudeInFreqSpectrum[k] = 1; 

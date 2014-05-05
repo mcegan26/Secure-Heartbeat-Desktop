@@ -20,7 +20,6 @@ namespace Dsktp_SecureHeartbeat.Models
         private String forename;
         private String surname;
         private String department;
-        private DateTime dob;
         private bool withinBoundary;
         private double NWLat;
         private double NWLong;
@@ -45,15 +44,15 @@ namespace Dsktp_SecureHeartbeat.Models
         }
 
 
-        private float[,] spectrumResults;
-        public float[,] SpectrumResults
+        private double[,] spectrumResults;
+        public double[,] SpectrumResults
         {
             get { return spectrumResults; }
             set { spectrumResults = value; }
         }
 
-        private float[,] filteredSpectrumResults;
-        public float[,] FilteredSpectrumResults
+        private double[,] filteredSpectrumResults;
+        public double[,] FilteredSpectrumResults
         {
             get { return filteredSpectrumResults; }
             set { filteredSpectrumResults = value; }

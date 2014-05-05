@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using System;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace Dsktp_SecureHeartbeat
 {
@@ -10,6 +12,17 @@ namespace Dsktp_SecureHeartbeat
         public LogoutPage()
         {
             InitializeComponent();
+        }
+
+        private void LoginPageButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            var loginWindow = new LoginWindow();
+            loginWindow.Show();
+            var parentWindow = Window.GetWindow(this);
+            if (parentWindow != null)
+            {
+                parentWindow.Close();
+            }
         }
     }
 }

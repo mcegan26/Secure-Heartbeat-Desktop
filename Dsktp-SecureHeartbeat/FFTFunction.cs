@@ -43,14 +43,14 @@ namespace Dsktp_SecureHeartbeat
             }
         }
 
-        private float [,] fftresults;
+        private double [,] fftresults;
 
         // Size of the running window to provide smoothness of the noise removal
         private int windowSpan = 5;
         // Commonly used over subtraction factor from theory in the field of noise removal
-        private float alpha = 1.1f;
+        private double alpha = 1.1;
         // float beta = 0.079432823 / 1.079432823 = Maximum  attenuation corresponding to a priori SNR (Sound to Noise Ratio) of -11db                   
-        private float beta = 0.3f; 
+        private double beta = 0.3; 
 
         public FFTFunction()
         {
@@ -58,14 +58,14 @@ namespace Dsktp_SecureHeartbeat
             currentFrame = new short[PaddedNumOfValues];
         }
 
-        public float[,] PerformFftFunction(String soundFileName)
+        public double[,] PerformFftFunction(String soundFileName)
         {
             //With parse impl pass in File name
             getWavInst = new RetrieveWav(soundFileName);
             getSoundAsShortByteArray = getWavInst.getWavFile();
 
             numberOfFrames = ((int)Math.Floor((getSoundAsShortByteArray.Length - NumOfShortValuesInFrame) / (NumOfShortValuesInFrame * 0.5))) + 1;
-            fftresults = new float[numberOfFrames, magnitudeSpectrum];
+            fftresults = new double[numberOfFrames, magnitudeSpectrum];
 
             for (var i = 0; i < numberOfFrames; i++)
             {
@@ -103,11 +103,11 @@ namespace Dsktp_SecureHeartbeat
         /// </summary>
         /// <param name="magnitudeArray">The FFT'd results that need to be filtered</param>
         /// <returns></returns>
-        public float[,] PerformWienerFilter(float[,] magnitudeArray)
+        public double[,] PerformWienerFilter(double[,] magnitudeArray)
         {
             var initalNoiseLength = 20;
-            var filteredArray = new float[magnitudeArray.GetLength(0), magnitudeArray.GetLength(1)];
-            var noiseEstimate = new float[magnitudeArray.GetLength(1)];
+            var filteredArray = new double[magnitudeArray.GetLength(0), magnitudeArray.GetLength(1)];
+            var noiseEstimate = new double[magnitudeArray.GetLength(1)];
 
             for (var t = 0; t < initalNoiseLength; t++)
             {
@@ -142,7 +142,7 @@ namespace Dsktp_SecureHeartbeat
                     var actualWindowSpan = upperBoundWindow - lowerBoundWindow + 1;
 
                     // running average input periodgram
-                    var averageMagnitude = 0f;
+                    var averageMagnitude = 0.0;
                     for (var q = lowerBoundWindow; q <= upperBoundWindow; q++)
                     {
                         averageMagnitude += magnitudeArray[q,k]*magnitudeArray[q,k];
@@ -156,8 +156,8 @@ namespace Dsktp_SecureHeartbeat
                     var signalPsd = averageMagnitude - alpha*noisePsd;
 
                     // set the strength of the filter weight to apply
-                    var filterStrength = 1f;
-                    if (averageMagnitude > 0f)
+                    var filterStrength = 1.0;
+                    if (averageMagnitude > 0.0)
                     {
                         filterStrength = signalPsd / averageMagnitude;
                     }
@@ -175,15 +175,15 @@ namespace Dsktp_SecureHeartbeat
             return filteredArray;
         }
 
-        public float[,] PerformLogOfResults(float [,] spectrumArray)
+        public double[,] PerformLogOfResults(double [,] spectrumArray)
         {
-            var logSpectrumArray = new float[spectrumArray.GetLength(0), spectrumArray.GetLength(1)];
+            var logSpectrumArray = new double[spectrumArray.GetLength(0), spectrumArray.GetLength(1)];
             
             for (var t = 0; t < spectrumArray.GetLength(0); t++)
             {
                 for (var k = 0; k < spectrumArray.GetLength(1); k++)
                 {
-                    logSpectrumArray[t, k] = (float) Math.Log(spectrumArray[t, k]);
+                    logSpectrumArray[t, k] = Math.Log(spectrumArray[t, k]);
                     if (logSpectrumArray[t, k] < 1)
                     {
                         logSpectrumArray[t, k] = 1;

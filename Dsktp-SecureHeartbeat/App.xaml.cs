@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using Dsktp_SecureHeartbeat.ViewModels;
+using Parse;
 
 
 namespace Dsktp_SecureHeartbeat
@@ -47,7 +48,7 @@ namespace Dsktp_SecureHeartbeat
 
         public App()
         {
-            //ParseClient.Initialize("JO4tBIiydFtLJ8zjDFg10Km8YS84a2WqgC8hUiQ3", "y2dLvFgBeyzt89pv9gLtJBaZlsMn7jiZfIty5Ufb");
+            ParseClient.Initialize("JO4tBIiydFtLJ8zjDFg10Km8YS84a2WqgC8hUiQ3", "y2dLvFgBeyzt89pv9gLtJBaZlsMn7jiZfIty5Ufb");
         }
 
         

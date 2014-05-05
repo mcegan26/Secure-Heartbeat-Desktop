@@ -44,7 +44,7 @@ namespace Dsktp_SecureHeartbeat
             // TODO Retrieve sound file from folder
 
             
-
+            
             var wavFileReader = new WaveFileReader(@"C:\SampleFYPAudio.wav");
             var buffer = new byte[wavFileReader.Length];
             int read = wavFileReader.Read(buffer, 0, buffer.Length);

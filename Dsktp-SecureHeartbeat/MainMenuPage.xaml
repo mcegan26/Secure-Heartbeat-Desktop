@@ -7,37 +7,70 @@
       d:DesignHeight="300" d:DesignWidth="300"
 	Title="Secure Heartbeat Dashboard">
 
-    <Grid x:Name="LayoutRoot" Background="#FFDFEEFD">
+    <!--Background="#FFDFEEFD"-->
+    <Grid x:Name="LayoutRoot">
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FF326495" Offset="0"/>
+                <GradientStop Color="#FFDAEBFD" Offset="0.987"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!--Image Source="Assets/SecureHeartbeat1.jpg" VerticalAlignment="Top" Margin="0,-32,0,0" Grid.Row="0" Grid.RowSpan="2" IsHitTestVisible="False" Stretch="Fill"/>-->
-        <!--TitlePanel contains the name of the application and page title-->
+        
         <StackPanel x:Name="MainMenuStackPanel" Grid.Row="0" Margin="0,0,0,10">
-            <StackPanel.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FF326495" Offset="0"/>
-                    <GradientStop Color="#FFDAEBFD" Offset="0.987"/>
-                </LinearGradientBrush>
-            </StackPanel.Background>
             <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Secure Heartbeat Dashboard" VerticalAlignment="Top" Height="56" FontFamily="Segoe WP SemiLight" FontSize="18" FontWeight="Bold" TextDecorations="{x:Null}" Margin="34,0,0,0"/>
-            <!--<TextBlock Text="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextNormalStyle}"/>-->
-            <!--<TextBlock Text="{Binding Path=LocalizedResources.MainMenuTitle, Source={StaticResource LocalizedStrings}}" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>-->
         </StackPanel>
         <Grid HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Top">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
 
-            <Button Content="Mobile Device Users" Grid.Row="0" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="190" Margin="40,10,30,0" Height="35"/>
-            <Button Content="Voice Analysis Environment" Grid.Row="1" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="190" Margin="40,20,30,0" Height="35"/>
-            <Button Content="System log out" Grid.Row="2" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="190" Margin="40,20,30,0" Height="35"/>
+            <Button Content="Add New Device Users"
+                    Name="AddUsersButton"
+                    Grid.Row="0" 
+                    HorizontalAlignment="Left"  
+                    VerticalAlignment="Top"
+                    Width="190" 
+                    Click="AddUsersButton_OnClick"
+                    Margin="40,10,30,0"
+                    Height="35"/>
+            <Button Content="Edit User Details"
+                    Name="EditUsersButton"
+                    Grid.Row="1" 
+                    HorizontalAlignment="Left" 
+                    VerticalAlignment="Top" 
+                    Click="EditUsersButton_OnClick"
+                    Width="190" 
+                    Margin="40,10,30,0" 
+                    Height="35"/>
+            <Button Content="Voice Analysis Environment"
+                    Name="FFTButton"
+                    Grid.Row="2" 
+                    HorizontalAlignment="Left"  
+                    VerticalAlignment="Top"
+                    Click="FFTButton_OnClick"
+                    Width="190" 
+                    Margin="40,20,30,0"
+                    Height="35"/>
+            <Button Content="System log out"
+                    Name="LogOutButton"
+                    Grid.Row="3"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Click="LogOutButton_OnClick"
+                    Width="190" 
+                    Margin="40,20,30,0" 
+                    Height="35"/>
         </Grid>
 
     </Grid>

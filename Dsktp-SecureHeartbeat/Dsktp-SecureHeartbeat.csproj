@@ -74,12 +74,26 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AddUsersPage.xaml.cs">
+      <DependentUpon>AddUsersPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Calculator.cs" />
     <Compile Include="Commands\EnableButtonCommand.cs" />
     <Compile Include="Commands\LoginAttemptCommand.cs" />
+    <Compile Include="Commands\NavigateCommand.cs" />
     <Compile Include="Commands\PlotGraghCommand.cs" />
+    <Compile Include="Core\Impl\ViewModel.cs" />
+    <Compile Include="Core\Interfaces\INavigationAware.cs" />
+    <Compile Include="Core\Interfaces\IViewModel.cs" />
+    <Compile Include="EditUsersPage.xaml.cs">
+      <DependentUpon>EditUsersPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FFTFrameAnalysis.cs" />
     <Compile Include="FFTFunction.cs" />
+    <Compile Include="HelperClass.cs" />
+    <Compile Include="LoginWindow.xaml.cs">
+      <DependentUpon>LoginWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LogoutPage.xaml.cs">
       <DependentUpon>LogoutPage.xaml</DependentUpon>
     </Compile>
@@ -91,11 +105,23 @@
     </Compile>
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\SoundAnalysisViewModel.cs" />
+    <Page Include="AddUsersPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="DeviceUsersPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="EditUsersPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="LoginPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LoginWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -151,6 +177,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

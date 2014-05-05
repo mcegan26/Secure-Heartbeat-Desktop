@@ -1,97 +1,106 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Windows.Input;
+using Dsktp_SecureHeartbeat.Models;
+using SecureHeartbeat.Commands;
+using SecureHeartbeat.Core.Impl;
 
 namespace Dsktp_SecureHeartbeat.ViewModels
 {
-    public class LoginViewModel : INotifyPropertyChanged
+    public class LoginViewModel : ViewModel
     {
-        private string _id;
-        /// <summary>
-        /// Sample ViewModel property; this property is used to identify the object.
-        /// </summary>
-        /// <returns></returns>
-        public string ID
+
+
+        public string VmUsername
         {
             get
             {
-                return _id;
+                return loginModel.Username;
             }
             set
             {
-                if (value != _id)
+                if (value != loginModel.Username)
                 {
-                    _id = value;
-                    NotifyPropertyChanged("ID");
+                    loginModel.Username = value;
+                    NotifyPropertyChanged("VmUsername");
                 }
             }
         }
 
-        private string _usernameLabel = "Username: ";
-        /// <summary>
-        /// Sample ViewModel property; this property is used in the view to display its value using a Binding.
-        /// </summary>
-        /// <returns></returns>
-        public string UsernameLabel
-        {
-            get
-            {
-                return _usernameLabel;
-            }
-        }
 
-        private string _username = "";
-        /// <summary>
-        /// Sample ViewModel property; this property is used in the view to display its value using a Binding.
-        /// </summary>
-        /// <returns></returns>
-        public string Username
+        public string VmPassword
         {
             get
             {
-                return _username;
+                return loginModel.Password;
             }
             set
             {
-                if (value != _username)
+                if (value != loginModel.Password)
                 {
-                    _username = value;
-                    NotifyPropertyChanged("Username");
+                    loginModel.Password = (string)value;
+                    NotifyPropertyChanged("VmPassword");
                 }
             }
         }
 
-        private string _passwordLabel = "Password: ";
-        /// <summary>
-        /// Sample ViewModel property; this property is used in the view to display its value using a Binding.
-        /// </summary>
-        /// <returns></returns>
-        public string PasswordLabel
+        private LoginModel loginModel;
+        private ICommand _loginCommand;
+
+        public ICommand LoginAttemptCommand
         {
             get
             {
-                return _passwordLabel;
+                if (_loginCommand == null)
+                {
+                    _loginCommand = new LoginAttemptCommand(loginModel);
+                }
+                return _loginCommand;
             }
+
         }
 
-        private string _password = "";
+        public LoginViewModel()
+        {
+            loginModel = new LoginModel();
+        }
+
+
+        private string _sampleProperty = "Sample Runtime Property Value";
         /// <summary>
-        /// Sample ViewModel property; this property is used in the view to display its value using a Binding.
+        /// Sample ViewModel property; this property is used in the view to display its value using a Binding
         /// </summary>
         /// <returns></returns>
-        public string Password
+        public string SampleProperty
         {
             get
             {
-                return _password;
+                return _sampleProperty;
             }
             set
             {
-                if (value != _password)
+                if (value != _sampleProperty)
                 {
-                    _password = value;
-                    NotifyPropertyChanged("Password");
+                    _sampleProperty = value;
+                    NotifyPropertyChanged("SampleProperty");
                 }
             }
+        }
+
+
+        public bool IsDataLoaded
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// Creates and adds a few ItemViewModel objects into the Items collection.
+        /// </summary>
+        public void LoadData()
+        {
+
+            this.IsDataLoaded = true;
         }
 
 

@@ -10,9 +10,14 @@
       d:DesignHeight="350" d:DesignWidth="625"
 	Title="SoundAnalysisPage">
     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-    <Grid x:Name="LayoutRoot" Background="MintCream" Margin="0,0,20,0">
-
-        <Grid.ColumnDefinitions>
+    <Grid x:Name="LayoutRoot" Margin="0,0,20,0">
+            <Grid.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF326495" Offset="0"/>
+                    <GradientStop Color="MintCream" Offset="0.987"/>
+                </LinearGradientBrush>
+            </Grid.Background>
+            <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
@@ -27,12 +32,12 @@
         <!--Image Source="Assets/SecureHeartbeat1.jpg" VerticalAlignment="Top" Margin="0,-32,0,0" Grid.Row="0" Grid.RowSpan="2" IsHitTestVisible="False" Stretch="Fill"/>-->
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel x:Name="MainMenuStackPanel" Grid.Row="0" Grid.ColumnSpan="3" Margin="0,0,0,10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <StackPanel.Background>
+            <!--<StackPanel.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FF326495" Offset="0"/>
                     <GradientStop Color="MintCream" Offset="0.987"/>
                 </LinearGradientBrush>
-            </StackPanel.Background>
+            </StackPanel.Background>-->
             <TextBlock HorizontalAlignment="Left"
                        TextWrapping="Wrap" 
                        Text="Secure Heartbeat Dashboard" 

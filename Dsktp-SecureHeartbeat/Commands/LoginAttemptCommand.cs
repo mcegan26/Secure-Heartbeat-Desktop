@@ -1,10 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO.IsolatedStorage;
+using System.Linq;
+using System.Text;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Navigation;
+using Dsktp_SecureHeartbeat;
 using Dsktp_SecureHeartbeat.Models;
 using Parse;
+using Dsktp_SecureHeartbeat.Models;
 
-namespace Dsktp_SecureHeartbeat.Commands
+namespace SecureHeartbeat.Commands
 {
     public class LoginAttemptCommand : ICommand
     {
@@ -26,8 +34,12 @@ namespace Dsktp_SecureHeartbeat.Commands
         {
             try
             {
-                await ParseUser.LogInAsync(_loginModel.Username, _loginModel.Password);
+                var passBox = parameter as PasswordBox;
+                var pass = passBox.Password;
+                await ParseUser.LogInAsync(_loginModel.Username, pass);
                 // Login was successful.
+                
+                
             }
             catch (Exception e)
             {
@@ -37,6 +49,7 @@ namespace Dsktp_SecureHeartbeat.Commands
                     "Login Failed",
                     MessageBoxButton.OK);
             }
+
         }
 
 

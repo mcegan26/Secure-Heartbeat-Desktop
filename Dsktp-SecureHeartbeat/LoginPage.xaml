@@ -7,7 +7,64 @@
       d:DesignHeight="300" d:DesignWidth="300"
 	Title="LoginPage">
 
-    <Grid>
-        
+    <Grid x:Name="LayoutRoot">
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FF326495" Offset="0"/>
+                <GradientStop Color="#FFDAEBFD" Offset="0.987"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+
+        <StackPanel x:Name="MainMenuStackPanel" Grid.Row="0" Margin="0,0,0,10">
+            <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Secure Heartbeat Dashboard" VerticalAlignment="Top" Height="56" FontFamily="Segoe WP SemiLight" FontSize="18" FontWeight="Bold" TextDecorations="{x:Null}" Margin="34,0,0,0"/>
+        </StackPanel>
+
+        <!--ContentPanel contains LongListSelector and LongListSelector ItemTemplate. Place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock 
+                Text="Admin Username: " 
+                Grid.Row="0"  
+                TextWrapping="Wrap" />
+            <TextBox 
+                Text= "{Binding Path=VmUsername, Mode=TwoWay, UpdateSourceTrigger=Default}"
+                Grid.Row="1" 
+                Name="usernameBox"
+                TextWrapping="Wrap" />
+            <TextBlock 
+                Text="Password: " 
+                Grid.Row="2" 
+                TextWrapping="Wrap"/>
+            <PasswordBox 
+                Name="passBox"
+                Grid.Row="3"  />
+
+        </Grid>
+
+        <Button x:Name="LoginButton" 
+                Content="Login" 
+                Grid.Row="2"
+                Height="50"
+                Width="170"
+                Click="LoginButton_OnClick"/>
+
+        <!--Command="{Binding LoginAttemptCommand}" 
+                CommandParameter="{Binding ElementName=passBox}"-->
+
+
     </Grid>
 </Page>
